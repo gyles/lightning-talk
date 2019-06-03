@@ -1,21 +1,39 @@
 package com.think.lightningtalk.domain;
 
+import static com.think.lightningtalk.domain.User.EMAIL_REGEX;
+import static com.think.lightningtalk.domain.User.EMAIL_PATTERN;
+import static com.think.lightningtalk.domain.User.MAX_EMAIL_LENGTH;
 import static java.lang.String.format;
 
+import java.io.Serializable;
 import java.time.Instant;
 
-public class Submission {
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+public class Submission implements Serializable {
 	
-	public static final Integer MAX_TOPIC_LENGTH = 80;
+	private static final long serialVersionUID = 1L;
+
+	public static final int MAX_TOPIC_LENGTH = 80;
 	
-	public static final Integer MAX_DESCRIPTION_LENGTH = 120;
+	public static final int MAX_DESCRIPTION_LENGTH = 120;
 	
-	private final User user;
+	@NotNull
+	@Size(max = MAX_EMAIL_LENGTH)
+	@Pattern(regexp = EMAIL_REGEX)
+	private String email;
 	
+	@NotNull
+	@Size(max = MAX_TOPIC_LENGTH)
 	private String topic;
 	
+	@NotNull
+	@Size(max = MAX_DESCRIPTION_LENGTH)
 	private String description;
 	
+	@NotNull
 	private Instant date;
 	
 	private String ipaddress;
@@ -25,21 +43,26 @@ public class Submission {
 	private String osname;
 	
 	private String useragent;
-
-	public Submission(final String topic, final String description, 
-			final Instant date, final User user) {
-		if (user == null) {
-			throw new NullPointerException("User should not be null");
-		}
-		
-		this.user = user;
-		setTopic(topic);
-		setDescription(description);
-		setDate(date);
+	
+	public String getEmail() {
+		return email;
 	}
 	
-	public User getUser() {
-		return user;
+	public final void setEmail(final String email) {
+		if (email == null) {
+			throw new NullPointerException("Email should not be null");
+		}
+		if (email.length() > MAX_EMAIL_LENGTH) {
+			throw new IllegalArgumentException(format("Email should be less than %d characters", MAX_EMAIL_LENGTH));
+		}
+		if (!EMAIL_PATTERN.matcher(email).matches()) {
+			throw new IllegalArgumentException(format("Email should match %s", EMAIL_PATTERN.pattern()));
+		}
+		if (this.email != null) {
+			throw new NullPointerException("Email cannot be changed");
+		}
+		
+		this.email = email.toLowerCase();
 	}
 
 	public String getTopic() {
@@ -119,6 +142,38 @@ public class Submission {
 
 	public void setUseragent(final String useragent) {
 		this.useragent = useragent;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((topic == null) ? 0 : topic.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Submission other = (Submission) obj;
+		if (topic == null) {
+			if (other.topic != null)
+				return false;
+		} else if (!topic.equals(other.topic))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Submission [email=" + email + ", topic=" + topic + ", description=" + description + ", date=" + date
+				+ ", ipaddress=" + ipaddress + ", hostname=" + hostname + ", osname=" + osname + ", useragent="
+				+ useragent + "]";
 	}
 
 }

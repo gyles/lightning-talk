@@ -4,46 +4,47 @@ import static com.think.lightningtalk.domain.User.MAX_EMAIL_LENGTH;
 
 import java.util.Arrays;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class UserTest {
 	
+	private User user;
+	
+	@Before
+	public void prepareUser() {
+		user = new User();
+	}
+	
 	@Test(expected = NullPointerException.class)
-	public void testThatEmailIsRequired() {
-		new User(null, "password");
+	public void testThatEmailCannotBeSetToNull() {
+		user.setEmail(null);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testThatEmailCannotBeEmpty() {
+		user.setEmail("");
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testThatEmailCannotExceedMaxLimit() {
 		char[] chars = new char[MAX_EMAIL_LENGTH + 1];
 		Arrays.fill(chars, '*');
-		new User(new String(chars), "password");
+		user.setEmail(new String(chars));
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testThatEmailCannotBeInvalid() {
-		new User("user@localhost", "password");
-	}
-	
-	@Test(expected = NullPointerException.class)
-	public void testThatPasswordIsRequired() {
-		new User("user@localhost.local", null);
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void testThatPasswordIsNotEmpty() {
-		new User("user@localhost.local", "");
+		user.setEmail("user@localhost");
 	}
 	
 	@Test(expected = NullPointerException.class)
 	public void testThatPasswordCannotBeSetToNull() {
-		User user = new User("user@localhost.local", "password");
 		user.setPassword(null);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testThatPasswordCannotBeSetToEmpty() {
-		User user = new User("user@localhost.local", "password");
 		user.setPassword("");
 	}
 
