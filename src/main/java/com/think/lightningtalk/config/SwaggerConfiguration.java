@@ -21,6 +21,7 @@ public class SwaggerConfiguration {
                 .select()
                 .apis(not(RequestHandlerSelectors.basePackage("org.springframework")))
                 .paths(PathSelectors.any())
-                .build().forCodeGeneration(true);
-    }
+                .build()
+                .forCodeGeneration(true);
+    }	
 }
