@@ -1,14 +1,16 @@
 package com.think.lightningtalk.resource;
 
-import static com.think.lightningtalk.domain.Submission.MAX_TOPIC_LENGTH;
 import static com.think.lightningtalk.domain.Submission.MAX_DESCRIPTION_LENGTH;
+import static com.think.lightningtalk.domain.Submission.MAX_TOPIC_LENGTH;
 import static com.think.lightningtalk.domain.User.MAX_EMAIL_LENGTH;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class SubmissionResource implements Serializable {
 	
@@ -23,9 +25,9 @@ public class SubmissionResource implements Serializable {
 	private String description;
 	
 	@NotNull
-	private Instant date;
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private LocalDateTime date;
 	
-	@NotNull
 	@Size(max = MAX_EMAIL_LENGTH)
 	private String email;
 	
@@ -53,11 +55,11 @@ public class SubmissionResource implements Serializable {
 		this.description = description;
 	}
 
-	public Instant getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 
-	public void setDate(Instant date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 

@@ -1,5 +1,6 @@
 package com.think.lightningtalk.config;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +15,22 @@ public class ApplicationProperties {
 	
 	private List<User> users = new ArrayList<>();
 	
+	private List<Submission> submissions = new ArrayList<>();
+
 	public List<User> getUsers() {
 		return users;
 	}
 	
 	public void setUsers(List<User> users) {
 		this.users = users;
+	}
+	
+	public List<Submission> getSubmissions() {
+		return submissions;
+	}
+
+	public void setSubmissions(List<Submission> submissions) {
+		this.submissions = submissions;
 	}
 
 	public static class User {
@@ -44,6 +55,37 @@ public class ApplicationProperties {
 		}
 		public void setRoles(List<String> roles) {
 			this.roles = roles;
+		}
+	}
+	
+	public static class Submission {
+		private String topic;
+		private String description;
+		private Instant date;
+		private String email;
+		public String getTopic() {
+			return topic;
+		}
+		public void setTopic(String topic) {
+			this.topic = topic;
+		}
+		public String getDescription() {
+			return description;
+		}
+		public void setDescription(String description) {
+			this.description = description;
+		}
+		public Instant getDate() {
+			return date;
+		}
+		public void setDate(Instant date) {
+			this.date = date;
+		}
+		public String getEmail() {
+			return email;
+		}
+		public void setEmail(String email) {
+			this.email = email;
 		}
 	}
 

@@ -70,6 +70,16 @@ public class SubmissionServiceImpl implements SubmissionService {
     
     @Override
     @Transactional(readOnly = true)
+	public Page<Submission> findUpcoming(Pageable pageable) {
+		LOG.debug("Request to get upcoming Submissions");
+		
+		Page<SubmissionEntity> result = submissionRepository.findUpcoming(pageable);
+		return new PageImpl<>(result.stream().map(SubmissionMapper::fromEntity).collect(toList()), 
+				pageable, result.getSize());
+	}
+    
+    @Override
+    @Transactional(readOnly = true)
     public Page<Submission> findAllByDate(Instant instant, Pageable pageable) {
     	LOG.debug("Request to get all Submissions for date : {}", instant);
     	

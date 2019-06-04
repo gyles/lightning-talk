@@ -1,7 +1,7 @@
 package com.think.lightningtalk.domain;
 
-import static com.think.lightningtalk.domain.User.EMAIL_REGEX;
 import static com.think.lightningtalk.domain.User.EMAIL_PATTERN;
+import static com.think.lightningtalk.domain.User.EMAIL_REGEX;
 import static com.think.lightningtalk.domain.User.MAX_EMAIL_LENGTH;
 import static java.lang.String.format;
 

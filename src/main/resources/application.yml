@@ -18,3 +18,8 @@ application:
       roles:
         - USER
         - ADMIN
+  submissions:
+    - topic: 'DevOps meets Kubernetes'
+      description: 'DevOps Kubernetes Demo'
+      date: 2019-08-06T13:30:00.000Z
+      email: 'user@think.com'

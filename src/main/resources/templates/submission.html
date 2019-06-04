@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Submit a new topic</title>
+        <link rel="stylesheet" th:href="@{/css/submission.css}"/>
+    </head>
+    <body>
+        <div>
+            <div class="form">
+                <form th:action="@{/submission}" th:object="${submission}" method="post">
+                    <li>
+                        <label>Date<span class="required">*</span></label>
+                        <input type="datetime-local" th:field="*{date}" />
+                    </li>
+                    <li>
+                        <label>Topic<span class="required">*</span></label>
+                        <input type="text" th:field="*{topic}" />
+                    </li>
+                    <li>
+                        <label>Description<span class="required">*</span></label>
+                        <input type="text" th:field="*{description}" />
+                    </li>
+                    <li>
+                        <label>Email</label>
+                        <input type="text" th:field="*{email}" disabled="disabled" />
+                    </li>
+                    <li>
+                        <button type="submit">Submit</button>
+                    </li>
+                    
+                </form>
+            </div>
+        </div>
+        
+        
+    </body>
+</html>

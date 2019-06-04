@@ -39,7 +39,7 @@ public class SubmissionEntity implements Serializable {
     private String description;
     
     @NotNull
-    @Column(name = "date", nullable = false, unique = true)
+    @Column(name = "date", nullable = false)
     private Instant date;
     
     @Column(name = "ipaddress")

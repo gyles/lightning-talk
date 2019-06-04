@@ -7,10 +7,26 @@
     <body>
         <h1>Upcoming Talks</h1>
 
-        <form th:action="@{/submission}" method="post">
+        <table>
+            <thead>
+                <tr>
+                    <th>Topic</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="talk : ${upcoming}">
+                    <td><span th:text="${talk.topic}"> Topic </span></td>
+                    <td><span th:text="${talk.description}"> Description </span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a th:href="@{/submission}">
             <div>
                 <button type="submit">Submit a new topic</button>
             </div>
-        </form>
+        </a>
+
     </body>
 </html>

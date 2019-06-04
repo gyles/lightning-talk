@@ -15,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import com.think.lightningtalk.domain.Submission;
+import com.think.lightningtalk.service.SubmissionService;
 import com.think.lightningtalk.service.UserService;
 
 @Configuration
@@ -26,6 +28,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private SubmissionService submissionService;
 	
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -59,6 +64,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			domainUser.setPassword(user.getPassword());
     		userService.create(domainUser);
     	}
+    	
+    	for (ApplicationProperties.Submission submission : properties.getSubmissions()) {
+			Submission domainSubmission = new Submission();
+			domainSubmission.setTopic(submission.getTopic());
+			domainSubmission.setDescription(submission.getDescription());
+			domainSubmission.setDate(submission.getDate());
+			domainSubmission.setEmail(submission.getEmail());
+			
+			submissionService.create(domainSubmission);
+		}
+    	
         return new InMemoryUserDetailsManager(users);
     }
 

@@ -16,6 +16,8 @@ public interface SubmissionService {
 
     Page<Submission> findAll(Pageable pageable);
     
+    Page<Submission> findUpcoming(Pageable pageable);
+    
     Page<Submission> findAllByDate(Instant date, Pageable pageable);
 
     Optional<Submission> findOne(Long id);
