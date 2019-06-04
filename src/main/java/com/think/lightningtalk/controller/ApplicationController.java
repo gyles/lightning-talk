@@ -1,5 +1,6 @@
 package com.think.lightningtalk.controller;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 import javax.validation.Valid;
@@ -31,9 +32,10 @@ public class ApplicationController {
 	
 	@GetMapping("/submission")
     public String getSubmission(Model model) {
-		Submission submission = new Submission();
-		submission.setEmail(SecurityContextHolder.getContext().getAuthentication().getName());
-        model.addAttribute("submission", submission);
+		SubmissionResource resource = new SubmissionResource();
+		resource.setEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		resource.setDate(submissionService.nextSession());
+        model.addAttribute("submission", resource);
         return "/submission.html";
     }
 	

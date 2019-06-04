@@ -4,6 +4,7 @@ import static com.think.lightningtalk.util.SubmissionMapper.toEntity;
 import static java.util.stream.Collectors.toList;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -103,5 +104,19 @@ public class SubmissionServiceImpl implements SubmissionService {
     	
         submissionRepository.deleteById(id);
     }
+
+	@Override
+	public LocalDateTime nextSession() {
+		LocalDateTime current = LocalDateTime.now();
+		LocalDateTime next = LocalDateTime.now();
+		if (current.getMonthValue() % 2 == 0) {
+			next = next.plusMonths(2).withDayOfMonth(1);
+		} else {
+			next = next.plusMonths(1).withDayOfMonth(1);
+		}
+		int dayOfWeek = next.getDayOfWeek().getValue();
+		
+		return next.plusDays(dayOfWeek > 2 ? 9 - dayOfWeek : 2 - dayOfWeek).withHour(13).withMinute(30);
+	}
 
 }

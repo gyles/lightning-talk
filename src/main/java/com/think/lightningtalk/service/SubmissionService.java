@@ -1,6 +1,7 @@
 package com.think.lightningtalk.service;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -23,5 +24,7 @@ public interface SubmissionService {
     Optional<Submission> findOne(Long id);
 
     void delete(Long id);
+    
+    LocalDateTime nextSession();
 
 }
